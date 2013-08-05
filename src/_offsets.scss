@@ -1,0 +1,65 @@
+/* ---------- ---------- *
+ * A couple of mixins to handle positioning
+ *
+ * CodePen: http://codepen.io/HugoGiraudel/pen/HDebE
+ * Article: http://hugogiraudel.com/2013/08/05/offsets-sass-mixin/
+/* ---------- ---------- */
+
+/**
+ * Private method
+ * Can be called but it's not the point
+ */
+@mixin _position($position, $args) {
+  $offsets: top right bottom left;
+  
+  @each $o in $offsets {
+    $i: index($args, $o);
+    @if $i
+    and $i + 1 <= length($args) 
+    and type-of( nth($args, $i + 1) ) == number {
+      #{$o}: nth($args, $i + 1);
+    }
+  }
+  
+  position: $position;
+}
+
+/**
+ * Mixin triplet calling the private mixin
+ * with the appropriate position value
+ */
+@mixin absolute($args) {
+  @include _position(absolute, $args);
+}
+
+@mixin relative($args) {
+  @include _position(relative, $args);
+}
+
+@mixin    fixed($args) {
+  @include _position(fixed,    $args);
+}
+
+.el {
+  /**
+   * left   :  will be applied (10px)
+   * right  : won't be applied (not numeric)
+   * left   :  will be applied (1em)
+   * bottom : won't be applied (no value)
+   */
+  @include absolute(left 10px right aerr top 1em bottom);
+  
+  background: deepskyblue;
+  height: 10em;
+  width: 10em;
+}
+
+/**
+ * My dream would be to able to do this:
+ * absolute: left 10px top 1em;
+ * This would rock so bad. 
+ *
+ * Actually we could see something like this in SCSS some day:
+ * ++absolute: left 10px top 1em;
+ * See: https://github.com/nex3/sass/issues/366
+ */

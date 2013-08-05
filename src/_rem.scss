@@ -1,0 +1,45 @@
+/* ---------- ---------- *
+ * A REM-PX Sass mixin
+ *
+ * CodePen: http://codepen.io/HugoGiraudel/pen/xsKdH
+ * Article: http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+/* ---------- ---------- */
+
+/**
+ * A REM-PX Sass mixin
+ *
+ * $property : the property you want to apply a value to
+ * $values   : the values you want to apply to $property
+ * 
+ * 1. Removing the unit
+ */
+@mixin rem($property, $values) {
+  $px : ();
+  $rem: ();
+  
+  @each $value in $values {
+   
+    @if $value == 0 or $value == auto {
+      $px : append($px , $value);
+      $rem: append($rem, $value);
+    }
+    
+    @else { 
+      $unit: unit($value);
+      $val: $value / ($value * 0 + 1); /* 1 */
+      
+      @if $unit == px {
+        $px : append($px,  $value);
+        $rem: append($rem, ($val / 10 * 1rem));
+      }
+      
+      @if $unit == rem {
+        $px : append($px,  ($val * 10 * 1px));
+        $rem: append($rem, $value);
+      }
+    }
+  }
+  
+  #{$property}: $px;
+  #{$property}: $rem;
+}

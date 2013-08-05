@@ -1,0 +1,45 @@
+/* ---------- ---------- *
+ * A mixin to dynamically apply styles based on nested Sass lists
+ *
+ * CodePen: http://codepen.io/HugoGiraudel/pen/yGFri
+/* ---------- ---------- */
+
+/**
+ * Applying styles with nested lists
+ */ 
+@mixin apply-styles($styles) {
+  // Handle case where only a pair is passed
+  @if length($styles == 2) and length(nth($styles, 1)) == 1 {
+    #{nth($styles, 1)}: #{nth($styles, 2)};
+  }
+  @else {
+    @each $style in $styles { // For each property:value key
+      @if length($style) == 2 { // We make sure there's everything
+        #{nth($style, 1)}: #{nth($style, 2)}; // And we apply styles
+      }
+    }
+  }
+}
+
+/**
+ * Usage
+ */
+.element {
+  /* Defining styles or something */
+  $styles: ( 
+           (box-sizing border-box),
+           (width 10em),
+           (height 10em),
+           (margin 1em),
+           (padding, 1em .5em),
+           (background deepskyblue),
+           (background linear-gradient(to right, darken(deepskyblue, 10%), lighten(deepskyblue, 10%))),
+           (font-family (Helvetica, Arial, sans-serif))
+         );
+  
+  /* Adding styles to the list */
+  $styles: append( $styles, (border, 1px solid rgba(0,0,0,.5)) );
+  
+  /* Applying styles */
+  @include apply-styles( $styles );
+}

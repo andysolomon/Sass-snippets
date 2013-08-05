@@ -1,0 +1,10 @@
+/* ---------- ---------- *
+ * Strip unit from length
+ *
+ * Source: https://github.com/nex3/sass/pull/402
+/* ---------- ---------- */
+
+
+@function clamp($value, $min, $max) {
+  @return if($value > $max, $max, if($value < $min, $min, $value));
+}

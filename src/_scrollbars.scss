@@ -1,0 +1,33 @@
+/* ---------- ---------- *
+ * A WebKit scrollbar styling mixin
+ *
+ * CodePen: http://codepen.io/HugoGiraudel/pen/KFDuB
+/* ---------- ---------- */
+
+/**
+ * Webkit (and IE) scrollbar styling
+ * 
+ * $size      : width for vertical scrollbars, height for horizontal scrollbars
+ * $primary   : main color (scrollbar)
+ * $secondary : secondary color (background)
+ */
+@mixin scrollbar($size, $primary, $secondary: lighten($primary, 25%)) {
+	::-webkit-scrollbar {
+		width:  $size;
+		height: $size;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: $primary;
+	}
+
+	::-webkit-scrollbar-track {
+		background: $secondary;
+	}
+  
+  // For Internet Explorer
+  body {
+    scrollbar-face-color: $primary;
+    scrollbar-track-color: $secondary;
+  }
+}

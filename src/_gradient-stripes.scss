@@ -1,0 +1,85 @@
+/* ---------- ---------- *
+ * A mixin to turn a regular gradient into a striped one
+ *
+ * CodePen: http://codepen.io/HugoGiraudel/pen/KxzrH
+ * Article: http://css-tricks.com/striped-background-gradients/
+/* ---------- ---------- */
+
+/**
+ * Mixin to stripe a gradient
+ */
+@mixin stripes($colors, $direction: "to bottom") {  
+    
+    $stripes  : 100% / length($colors);
+    $firstCol : nth($colors, 1);
+    $auto     : if( type-of($firstCol) == list, false, true );
+    $gradient : ();
+    
+    @for $i from 1 through length($colors) {
+      $item : nth($colors, $i);
+      $dump : ();
+      
+      @if $auto == true {
+        $dump : $item $stripes * ($i - 1), $item $stripes * $i;
+      }
+      
+      @else {
+                
+        @if $i > 1 {
+          $prev : nth($colors, $i - 1);
+          $dump : $dump, nth($item, 1) nth($prev, 2);
+        }
+        
+        $dump : $dump, $item;
+        
+      }
+      
+      $gradient : join($gradient, $dump, comma);
+
+    }
+    
+    background: unquote('linear-gradient(') #{$direction} unquote(',') $gradient unquote(')');
+}
+
+/**
+ * Demo 1
+ * Passing a collection of color-stops to the mixin
+ * Direction is ommited since default is top to bottom
+ *
+ * If you have two lists (one of colors, one of stops)
+ * Merge them with zip() (color list first)
+ *
+ * $colors: #1abc9c, #27ae60, #3498db, #16a085, #2980b9, #34495e, #1abc9c;
+ * $stops : 18%, 33%, 46%, 55%, 65%, 83%, 100%; 
+ *  
+ * $argument: zip($colors, $stops);
+ */
+$color-stops-1: #1abc9c 18%, #27ae60 33%, #3498db 46%, #16a085 55%, #2980b9 65%, #34495e 83%, #1abc9c 100%;
+
+.demo-1 {
+  @include stripes($color-stops-1);
+}
+
+/**
+ * Demo 2 (less useful)
+ * Creating a collection of color-stops in a loop with hsl()
+ * Also known as "pooping a rainbow"
+ */
+.demo-2 {
+  $colors: (); /* Contains colors */
+  $stops:  (); /* Contains stops  */
+    
+  @for $i from 1 through 15 {
+      $colors : append($colors, hsl($i*10, 75%, 50%));
+      $stops  : append($stops , unquote('#{$i*6}%'));
+  }
+  
+  $color-stops-2: zip($colors, $stops); /* Zipping both lists */
+    
+  @include stripes($color-stops-2, "to right");
+  /**
+   * If you want all stripes to have the same size,
+   * you can pass a list of colors without stops
+   * like $colors
+   */
+}
