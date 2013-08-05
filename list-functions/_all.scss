@@ -1,8 +1,8 @@
 /* --------------------------------------------------------------- *
  * A couple of advanced Sass lists functions
  * --------------------------------------------------------------- *
- * shift($haystack)
- * pop($haystack)
+ * first($haystack)
+ * last($haystack)
  * to-string($haystack, $value: '', $is-nested: false)
  * last-index($haystack, $needle)
  * prepend($haystack, $value)
@@ -24,7 +24,7 @@
  * ---------------------------------------------------------------
  * $haystack : list
  */
-@function shift($haystack) {
+@function first($haystack) {
   @return nth($haystack, 1);
 }
 
@@ -33,7 +33,7 @@
  * ---------------------------------------------------------------
  * $haystack : list
  */
-@function pop($haystack) {
+@function last($haystack) {
   @return nth($haystack, length($haystack));
 }
 
@@ -48,7 +48,7 @@
   $new: null;
   @for $i from 1 through length($haystack) {
     @if type-of(nth($haystack, $i)) == list {
-      $new: $new#{merge(nth($haystack, $i), $value, true)};
+      $new: $new#{to-string(nth($haystack, $i), $value, true)};
     }
     @else {
       $new: $new#{nth($haystack, $i)};
@@ -259,11 +259,12 @@
 /**
  * Usage
  */
+// Usage
 $list: a, b, c, d c, e, f, c;
 
-$test-shift: shift($list);                    // a
+$test-first: first($list);                    // a
 
-$test-pop: pop($list);                        // c
+$test-last: last($list);                      // c
 
 $test-to-string: to-string($list);            // abcdcefc
 $test-to-string: to-string($list, '');        // abcdcefc

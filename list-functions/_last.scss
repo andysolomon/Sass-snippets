@@ -3,6 +3,6 @@
  * ---------------------------------------------------------------
  * $haystack : list
  */
-@function pop($haystack) {
+@function last($haystack) {
   @return nth($haystack, length($haystack));
 }

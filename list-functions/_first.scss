@@ -3,6 +3,6 @@
  * ---------------------------------------------------------------
  * $haystack : list
  */
-@function shift($haystack) {
+@function first($haystack) {
   @return nth($haystack, 1);
 }
