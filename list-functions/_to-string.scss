@@ -1,11 +1,11 @@
 /**
- * Joins all elements of $haystack with $value
+ * Joins all elements of $haystack with $glue
  * ---------------------------------------------------------------
  * $haystack  : list
  * $glue      : value to use as a joiner
  * $is-nested : strictly internal boolean for recursivity
  */
-@function to-string($haystack, $value: '', $is-nested: false) {
+@function to-string($haystack, $glue: '', $is-nested: false) {
   $new: null;
 
   @for $i from 1 through length($haystack) {
