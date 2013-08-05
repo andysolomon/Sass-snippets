@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------- *
  * A couple of advanced Sass lists functions
- *
+ * --------------------------------------------------------------- *
  * shift($haystack)
  * pop($haystack)
  * to-string($haystack, $value: '', $is-nested: false)
@@ -13,9 +13,10 @@
  * remove-at($haystack, $needle)
  * slice($haystack, $start: 1, $end: length($haystack))
  * reverse($haystack, $recursive: false)
- *
+ * --------------------------------------------------------------- *
  * CodePen: http://codepen.io/HugoGiraudel/pen/loAgq
-/* --------------------------------------------------------------- */
+ * Repository: https://github.com/HugoGiraudel/Sass-snippets/blob/master/src/list-functions/
+ * --------------------------------------------------------------- */
 
 
 /**
