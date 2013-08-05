@@ -261,7 +261,6 @@
  */
 $list: a, b, c, d c, e, f, c;
 
-
 $test-shift: shift($list);                    // a
 
 $test-pop: pop($list);                        // c

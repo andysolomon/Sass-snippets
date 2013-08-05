@@ -1,9 +1,9 @@
-/* ---------- ---------- *
+/* --------------------------------------------------------------- *
  * A mixin to turn a regular gradient into a striped one
- *
+ * --------------------------------------------------------------- *
  * CodePen: http://codepen.io/HugoGiraudel/pen/KxzrH
  * Article: http://css-tricks.com/striped-background-gradients/
-/* ---------- ---------- */
+ * --------------------------------------------------------------- */
 
 /**
  * Mixin to stripe a gradient
@@ -45,7 +45,7 @@
  * Demo 1
  * Passing a collection of color-stops to the mixin
  * Direction is ommited since default is top to bottom
- *
+ * 
  * If you have two lists (one of colors, one of stops)
  * Merge them with zip() (color list first)
  *

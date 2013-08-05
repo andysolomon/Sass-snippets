@@ -1,14 +1,14 @@
-/* ---------- ---------- *
+/* --------------------------------------------------------------- *
  * A couple of mixins to handle positioning
- *
+ * --------------------------------------------------------------- *
  * CodePen: http://codepen.io/HugoGiraudel/pen/HDebE
  * Article: http://hugogiraudel.com/2013/08/05/offsets-sass-mixin/
-/* ---------- ---------- */
+ * --------------------------------------------------------------- */
 
 /**
  * Private method
  * Can be called but it's not the point
- *
+ * ---------------------------------------------------------------
  * $position : position
  * $args     : list of offsets and values
  */
@@ -30,7 +30,7 @@
 /**
  * Mixin triplet calling the private mixin
  * with the appropriate position value
- *
+ * ---------------------------------------------------------------
  * $args : list of offsets and values
  */
 @mixin absolute($args) {

@@ -1,12 +1,12 @@
-/* ---------- ---------- *
+/* --------------------------------------------------------------- *
  * A mixin to dynamically apply styles based on nested Sass lists
- *
+ * --------------------------------------------------------------- *
  * CodePen: http://codepen.io/HugoGiraudel/pen/yGFri
-/* ---------- ---------- */
+ * --------------------------------------------------------------- */
 
 /**
  * Applying styles with nested lists
- *
+ * ---------------------------------------------------------------
  * $styles : list of styles to apply
  */ 
 @mixin apply-styles($styles) {

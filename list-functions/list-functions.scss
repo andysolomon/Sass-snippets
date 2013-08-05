@@ -1,8 +1,30 @@
-/**
- * Usage
- */
-$list: a, b, c, d c, e, f, c;
+/* --------------------------------------------------------------- *
+ * A couple of advanced Sass lists functions
+ * --------------------------------------------------------------- *
+ * CodePen: http://codepen.io/HugoGiraudel/pen/loAgq
+ * Repository: https://github.com/HugoGiraudel/Sass-snippets/blob/master/src/list-functions/
+ * --------------------------------------------------------------- */
 
+// One by one
+@import "shift";
+@import "pop";
+@import "to-string";
+@import "last-index";
+@import "prepend";
+@import "insert-at";
+@import "replace";
+@import "replace-at";
+@import "remove";
+@import "remove-at";
+@import "slice";
+@import "reverse";
+
+// Or all in one
+// @import "all";
+
+
+// Usage
+$list: a, b, c, d c, e, f, c;
 
 $test-shift: shift($list);                    // a
 

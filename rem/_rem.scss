@@ -1,16 +1,16 @@
-/* ---------- ---------- *
+/* --------------------------------------------------------------- *
  * A REM-PX Sass mixin
- *
+ * --------------------------------------------------------------- *
  * CodePen: http://codepen.io/HugoGiraudel/pen/xsKdH
  * Article: http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
-/* ---------- ---------- */
+ * --------------------------------------------------------------- */
 
 /**
  * A REM-PX Sass mixin
- *
+ * ---------------------------------------------------------------
  * $property : the property you want to apply a value to
  * $values   : the values you want to apply to $property
- * 
+ * ---------------------------------------------------------------
  * 1. Removing the unit
  */
 @mixin rem($property, $values) {
