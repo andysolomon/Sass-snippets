@@ -1,6 +1,6 @@
 /** 
  * Add $value at index $needle in $haystack
- * If $needle is < 1, prepend $value to $haystack
+ * If $needle is < 1, throws error
  * If $needle > length($haystack), append $value to $haystack
  * ---------------------------------------------------------------
  * $haystack : list
@@ -11,7 +11,7 @@
   $new: ();
 
   @if $needle < 1 {
-    $new: prepend($haystack, $value);
+    @warn "The needle has to be a positive integer.";
   }
 
   @else if $needle > length($haystack) {
