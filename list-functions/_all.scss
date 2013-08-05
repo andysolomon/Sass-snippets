@@ -69,15 +69,13 @@
  * $needle   : value to be searched for
  */
 @function last-index($haystack, $needle) {
-  $index: null;
-
-  @for $i from 1 through length($haystack) {
+  @for $i from length($haystack)*-1 through 1 {
     @if nth($haystack, $i) == $needle {
-      $index: $i;
+      @return abs($i);
     }
   }
 
-  @return $index;
+  @return null;
 }
 
 /**
