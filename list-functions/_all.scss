@@ -3,11 +3,11 @@
  * --------------------------------------------------------------- *
  * first($haystack)
  * last($haystack)
- * to-string($haystack, $value: '', $is-nested: false)
+ * to-string($haystack, $glue: '', $is-nested: false)
  * last-index($haystack, $needle)
  * prepend($haystack, $value)
  * insert-at($haystack, $needle, $value)
- * replace($haystack, $needle, $value, $recursive: false)
+ * replace($haystack, $old-value, $new-value, $recursive: false)
  * replace-at($haystack, $needle, $value)
  * remove($haystack, $needle, $recursive: false)
  * remove-at($haystack, $needle)
@@ -44,7 +44,7 @@
  * $value     : value to use as a joiner
  * $is-nested : strictly internal boolean for recursivity
  */
-@function to-string($haystack, $value: '', $is-nested: false) {
+@function to-string($haystack, $glue: '', $is-nested: false) {
   $new: null;
 
   @for $i from 1 through length($haystack) {
@@ -92,7 +92,7 @@
 
 /** 
  * Add $value at index $needle in $haystack
- * If $needle is < 1, prepend $value to $haystack
+ * If $needle is < 1, throws error
  * If $needle > length($haystack), append $value to $haystack
  * ---------------------------------------------------------------
  * $haystack : list
@@ -103,7 +103,7 @@
   $new: ();
 
   @if $needle < 1 {
-    $new: prepend($haystack, $value);
+    @warn "The needle has to be a positive integer.";
   }
 
   @else if $needle > length($haystack) {
@@ -153,7 +153,7 @@
  * $value     : new value for $needle
  * $recursive : enable / disable recursivity
  */
-@function replace($haystack, $needle, $value, $recursive: false) {
+@function replace($haystack, $old-value, $new-value, $recursive: false) {
   $new: ();
 
   @for $i from 1 through length($haystack) {
