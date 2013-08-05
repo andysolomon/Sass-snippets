@@ -1,0 +1,18 @@
+/* ---------- ---------- *
+ * Strip unit from length
+/* ---------- ---------- */
+
+/**
+ * Strip unit from length
+ * 
+ * $value : length to strip unit from
+ */
+@function strip-unit($value) {
+    @return $value / ($value * 0 + 1);
+}
+
+/**
+ * Usage
+ */
+$value-with-unit: 42em;
+$value-without-unit: strip-unit($value-with-unit); // 42

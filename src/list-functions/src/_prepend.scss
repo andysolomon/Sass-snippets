@@ -1,0 +1,9 @@
+/**
+ * Add $value as first index of $haystack
+ * ---------------------------------------------------------------
+ * $haystack : list
+ * $value    : value to prepend to the list
+ */
+@function prepend($haystack, $value) {
+  @return join($value, $haystack);
+}

@@ -8,6 +8,9 @@
 /**
  * Private method
  * Can be called but it's not the point
+ *
+ * $position : position
+ * $args     : list of offsets and values
  */
 @mixin _position($position, $args) {
   $offsets: top right bottom left;
@@ -27,6 +30,8 @@
 /**
  * Mixin triplet calling the private mixin
  * with the appropriate position value
+ *
+ * $args : list of offsets and values
  */
 @mixin absolute($args) {
   @include _position(absolute, $args);
@@ -40,6 +45,9 @@
   @include _position(fixed,    $args);
 }
 
+/**
+ * Usage
+ */
 .el {
   /**
    * left   :  will be applied (10px)
@@ -47,7 +55,7 @@
    * left   :  will be applied (1em)
    * bottom : won't be applied (no value)
    */
-  @include absolute(left 10px right aerr top 1em bottom);
+  @include absolute(left 10px right "HAHAHA!" top 1em bottom);
   
   background: deepskyblue;
   height: 10em;

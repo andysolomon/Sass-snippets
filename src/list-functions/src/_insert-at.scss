@@ -1,0 +1,31 @@
+/** 
+ * Add $value at index $needle in $haystack
+ * If $needle is < 1, prepend $value to $haystack
+ * If $needle > length($haystack), append $value to $haystack
+ * ---------------------------------------------------------------
+ * $haystack : list
+ * $needle   : index to add
+ * $value    : value to add
+ */
+@function insert-at($haystack, $needle, $value) {
+  $new: ();
+
+  @if $needle < 1 {
+    $new: prepend($haystack, $value);
+  }
+
+  @else if $needle > length($haystack) {
+    $new: append($haystack, $value);
+  }
+
+  @else {
+    @for $i from 1 through length($haystack) {
+      @if $i == $needle {
+        $new: append($new, $value);
+      }
+      $new: append($new, nth($haystack, $i));
+    }
+  }
+
+  @return $new;
+}

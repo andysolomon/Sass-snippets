@@ -1,0 +1,8 @@
+/**
+ * Returns last element of $haystack
+ * ---------------------------------------------------------------
+ * $haystack : list
+ */
+@function pop($haystack) {
+  @return nth($haystack, length($haystack));
+}

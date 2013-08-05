@@ -1,0 +1,8 @@
+/**
+ * Returns first element of $haystack
+ * ---------------------------------------------------------------
+ * $haystack : list
+ */
+@function shift($haystack) {
+  @return nth($haystack, 1);
+}

@@ -1,10 +1,16 @@
 /* ---------- ---------- *
- * Strip unit from length
+ * A function to clamp a number between 2 values
  *
  * Source: https://github.com/nex3/sass/pull/402
 /* ---------- ---------- */
 
-
+/**
+ * Clamp function
+ * 
+ * $value : value to clamp
+ * $min   : minimum value
+ * $max   : maximum value
+ */
 @function clamp($value, $min, $max) {
   @return if($value > $max, $max, if($value < $min, $min, $value));
 }

@@ -6,6 +6,8 @@
 
 /**
  * Applying styles with nested lists
+ *
+ * $styles : list of styles to apply
  */ 
 @mixin apply-styles($styles) {
   // Handle case where only a pair is passed

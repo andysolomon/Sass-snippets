@@ -1,0 +1,49 @@
+/**
+ * Usage
+ */
+$list: a, b, c, d c, e, f, c;
+
+
+$test-shift: shift($list);                    // a
+
+$test-pop: pop($list);                        // c
+
+$test-to-string: to-string($list);            // abcdcefc
+$test-to-string: to-string($list, '');        // abcdcefc
+$test-to-string: to-string($list, "-");       // a-b-c-d-c-e-f-c
+
+$test-last-index: last-index($list, c);       // 7
+$test-last-index: last-index($list, z);       // null
+
+$test-prepend: prepend($list, z);             // z, a, b, c, d c, e, f, c
+$test-prepend: prepend($list, x y z);
+
+$test-insert-at: insert-at($list, -1, z);     // z, a, b, c, d c, e, f, c
+$test-insert-at: insert-at($list, 0, z);      // z, a, b, c, d c, e, f, c      
+$test-insert-at: insert-at($list, 4, z);      // a, b, c, z, d c, e, f, c
+$test-insert-at: insert-at($list, 100, z);    // a, b, c, d c, e, f, c, z
+
+$test-replace: replace($list, c, z);          // a, b, z, d c, e, f, z
+$test-replace: replace($list, c, z, true);    // a, b, z, d z, e, f, z
+$test-replace: replace($list, z, y);          // a, b, c, d c, e, f, c
+
+$test-replace-at: replace-at($list, -1, z);   // a, b, c, d c, e, f, c
+$test-replace-at: replace-at($list, 4, z);    // a, b, c, z, e, f, c
+$test-replace-at: replace-at($list, 100, z);  // a, b, c, d c, e, f, c
+
+$test-remove: remove($list, c);               // a, b, d c, e, f
+$test-remove: remove($list, c, true);         // a, b, d, e, f
+$test-remove: remove($list, z);               // a, b, c, d c, e, f, c
+
+$test-remove-at: remove-at($list, -1);        // a, b, c, d c, e, f, c
+$test-remove-at: remove-at($list, 0);         // a, b, c, d c, e, f, c
+$test-remove-at: remove-at($list, 1);         // b, c, d c, e, f, c
+$test-remove-at: remove-at($list, 100);       // a, b, c, d c, e, f, c
+
+$test-slice: slice($list);                    // a, b, c, d c, e, f, c
+$test-slice: slice($list, 3, 6);              // c, d c, e, f
+$test-slice: slice($list, 5, 4);              // e
+$test-slice: slice($list, -100, 100);         // a, b, c, d c, e, f, c
+
+$test-reverse: reverse($list);                // c, f, e, d c, c, b, a
+$test-reverse: reverse($list, true);          // c, f, e, c d, c, b, a

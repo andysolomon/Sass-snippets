@@ -71,3 +71,8 @@
   $res : toInt($str, 16);
   @return ($res % ($max - $min)) + $min;
 }
+
+/**
+ * Usage
+ */
+$random: rand(0, 100);

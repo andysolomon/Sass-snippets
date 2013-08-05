@@ -1,0 +1,22 @@
+/**
+ * Remove value(s) $needle from $haystack
+ * ---------------------------------------------------------------
+ * $haystack  : list
+ * $needle    : value to remove
+ * $recursive : enable / disable recursivity
+ */
+@function remove($haystack, $needle, $recursive: false) {
+  $new: ();
+
+  @for $i from 1 through length($haystack) {
+    @if type-of(nth($haystack, $i)) == list and $recursive {
+      $new: append($new, remove(nth($haystack, $i), $needle, true));
+    }
+
+    @else if nth($haystack, $i) != $needle {
+      $new: append($new, nth($haystack, $i));
+    }
+  }
+
+  @return $new;
+}

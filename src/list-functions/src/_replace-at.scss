@@ -1,0 +1,21 @@
+/**
+ * Replace value at index $needle from $haystack bu $value
+ * ---------------------------------------------------------------
+ * $haystack : list
+ * $needle   : index to update
+ * $value    : new value for index $needle
+ */
+@function replace-at($haystack, $needle, $value) {
+  $new: ();
+
+  @for $i from 1 through length($haystack) {
+    @if $i == $needle {
+      $new: append($new, $value);
+    }
+    @else {
+      $new: append($new, nth($haystack, $i));
+    }
+  }
+
+  @return $new;
+}

@@ -1,0 +1,24 @@
+/* --------------------------------------------------------------- *
+ * A couple of advanced Sass lists functions
+ * --------------------------------------------------------------- *
+ * CodePen: http://codepen.io/HugoGiraudel/pen/loAgq
+ * --------------------------------------------------------------- */
+
+// One by one
+@import "src/shift";
+@import "src/pop";
+@import "src/to-string";
+@import "src/last-index";
+@import "src/prepend";
+@import "src/insert-at";
+@import "src/replace";
+@import "src/replace-at";
+@import "src/remove";
+@import "src/remove-at";
+@import "src/slice";
+@import "src/reverse";
+
+// Or all in one
+// @import "src/all";
+
+@import "examples/list-functions-usage";

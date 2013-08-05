@@ -1,0 +1,17 @@
+/**
+ * Remove value from $haystack at index $needle
+ * ---------------------------------------------------------------
+ * $haystack : list
+ * $needle   : index to remove
+ */
+@function remove-at($haystack, $needle) {
+  $new: ();
+
+  @for $i from 1 through length($haystack) {
+    @if $i != $needle {
+      $new: append($new, nth($haystack, $i));
+    }
+  }
+
+  @return $new;
+}

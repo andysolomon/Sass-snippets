@@ -31,3 +31,8 @@
     scrollbar-track-color: $secondary;
   }
 }
+
+/**
+ * Usage
+ */
+@include scrollbar(.3em, deepskyblue);

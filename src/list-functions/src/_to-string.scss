@@ -1,0 +1,22 @@
+/**
+ * Joins all elements of $haystack with $value
+ * ---------------------------------------------------------------
+ * $haystack  : list
+ * $value     : value to use as a joiner
+ * $is-nested : strictly internal boolean
+ */
+@function to-string($haystack, $value: '', $is-nested: false) {
+  $new: null;
+  @for $i from 1 through length($haystack) {
+    @if type-of(nth($haystack, $i)) == list {
+      $new: $new#{merge(nth($haystack, $i), $value, true)};
+    }
+    @else {
+      $new: $new#{nth($haystack, $i)};
+      @if $i != length($haystack) or $is-nested {
+        $new: $new#{$value};
+      }
+    }
+  }
+  @return $new;
+}

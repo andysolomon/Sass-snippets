@@ -1,0 +1,21 @@
+/**
+ * Reverses the order of $haystack
+ * ---------------------------------------------------------------
+ * $haystack  : list
+ * $recursive : enable / disable recursivity
+ */
+@function reverse($haystack, $recursive: false) {
+   $new: ();
+
+   @for $i from length($haystack)*-1 through -1 {
+      @if type-of(nth($haystack, abs($i))) == list and $recursive {
+        $new: append($new, reverse(nth($haystack, abs($i)), true));      
+      }
+
+      @else {
+        $new: append($new, nth($haystack, abs($i)));
+      }
+   }
+
+   @return $new;
+}
