@@ -2,7 +2,7 @@
  * Joins all elements of $haystack with $value
  * ---------------------------------------------------------------
  * $haystack  : list
- * $value     : value to use as a joiner
+ * $glue      : value to use as a joiner
  * $is-nested : strictly internal boolean for recursivity
  */
 @function to-string($haystack, $value: '', $is-nested: false) {
@@ -12,11 +12,11 @@
     $e: nth($haystack, $i);
 
     @if type-of($e) == list {
-      $new: $new#{to-string($e, $value, true)};
+      $new: $new#{to-string($e, $glue, true)};
     }
     
     @else {
-      $new: if($i != length($haystack) or $is-nested, $new#{$e}#{$value}, $new#{$e});
+      $new: if($i != length($haystack) or $is-nested, $new#{$e}#{$glue}, $new#{$e});
     }
   }
 
