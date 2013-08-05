@@ -16,10 +16,7 @@
     }
     
     @else {
-      $new: $new#{$e};
-      @if $i != length($haystack) or $is-nested {
-        $new: $new#{$value};
-      }
+      $new: if($i != length($haystack) or $is-nested, $new#{$e}#{$value}, $new#{$e});
     }
   }
 
