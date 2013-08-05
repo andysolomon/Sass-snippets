@@ -1,31 +1,31 @@
 /** 
- * Add $value at index $needle in $haystack
- * If $needle is < 1, throws error
- * If $needle > length($haystack), append $value to $haystack
+ * Add $value at $index in $list
+ * If $index is < 1, throws error
+ * If $index > length($list), append $value to $list
  * ---------------------------------------------------------------
- * $haystack : list
- * $needle   : index to add
- * $value    : value to add
+ * $list  : list
+ * $index : index to add
+ * $value : value to add
  */
-@function insert-at($haystack, $needle, $value) {
-  $new: ();
+@function insert-at($list, $index, $value) {
+  $result: ();
 
-  @if $needle < 1 {
-    @warn "The needle has to be a positive integer.";
+  @if $index < 1 {
+    @warn "The index has to be a positive integer.";
   }
 
-  @else if $needle > length($haystack) {
-    $new: append($haystack, $value);
+  @else if $index > length($list) {
+    $result: append($list, $value);
   }
 
   @else {
-    @for $i from 1 through length($haystack) {
-      @if $i == $needle {
-        $new: append($new, $value);
+    @for $i from 1 through length($list) {
+      @if $i == $index {
+        $result: append($result, $value);
       }
-      $new: append($new, nth($haystack, $i));
+      $result: append($result, nth($list, $i));
     }
   }
 
-  @return $new;
+  @return $result;
 }

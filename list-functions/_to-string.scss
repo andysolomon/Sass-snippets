@@ -1,24 +1,24 @@
 /**
- * Joins all elements of $haystack with $glue
+ * Joins all elements of $list with $glue
  * ---------------------------------------------------------------
- * $haystack  : list
- * $glue      : value to use as a joiner
+ * $list      : list
+ * $glue      : value to use as a join string
  * $is-nested : strictly internal boolean for recursivity
  */
-@function to-string($haystack, $glue: '', $is-nested: false) {
-  $new: null;
+@function to-string($list, $glue: '', $is-nested: false) {
+  $result: null;
 
-  @for $i from 1 through length($haystack) {
-    $e: nth($haystack, $i);
+  @for $i from 1 through length($list) {
+    $e: nth($list, $i);
 
     @if type-of($e) == list {
-      $new: $new#{to-string($e, $glue, true)};
+      $result: $result#{to-string($e, $glue, true)};
     }
     
     @else {
-      $new: if($i != length($haystack) or $is-nested, $new#{$e}#{$glue}, $new#{$e});
+      $result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
     }
   }
 
-  @return $new;
+  @return $result;
 }

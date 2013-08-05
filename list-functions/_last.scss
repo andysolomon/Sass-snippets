@@ -1,8 +1,8 @@
 /**
- * Returns last element of $haystack
+ * Returns last element of $list
  * ---------------------------------------------------------------
- * $haystack : list
+ * $list : list
  */
-@function last($haystack) {
-  @return nth($haystack, length($haystack));
+@function last($list) {
+  @return nth($list, length($list));
 }

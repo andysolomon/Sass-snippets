@@ -1,18 +1,18 @@
 /* --------------------------------------------------------------- *
  * A couple of advanced Sass lists functions
  * --------------------------------------------------------------- *
- * first($haystack)
- * last($haystack)
- * to-string($haystack, $glue: '', $is-nested: false)
- * last-index($haystack, $needle)
- * prepend($haystack, $value)
- * insert-at($haystack, $needle, $value)
- * replace($haystack, $old-value, $new-value, $recursive: false)
- * replace-at($haystack, $needle, $value)
- * remove($haystack, $needle, $recursive: false)
- * remove-at($haystack, $needle)
- * slice($haystack, $start: 1, $end: length($haystack))
- * reverse($haystack, $recursive: false)
+ * first($list)
+ * last($list)
+ * to-string($list, $glue: '', $is-nested: false)
+ * last-index($list, $value)
+ * prepend($list, $value)
+ * insert-at($list, $index, $value)
+ * replace($list, $old-value, $new-value, $recursive: false)
+ * replace-at($list, $index, $value)
+ * remove($list, $value, $recursive: false)
+ * remove-at($list, $index)
+ * slice($list, $start: 1, $end: length($list))
+ * reverse($list, $recursive: false)
  * --------------------------------------------------------------- *
  * CodePen: http://codepen.io/HugoGiraudel/pen/loAgq
  * Repository: https://github.com/HugoGiraudel/Sass-snippets/blob/master/src/list-functions/
@@ -20,57 +20,57 @@
 
 
 /**
- * Returns first element of $haystack
+ * Returns first element of $list
  * ---------------------------------------------------------------
- * $haystack : list
+ * $list : list
  */
-@function first($haystack) {
-  @return nth($haystack, 1);
+@function first($list) {
+  @return nth($list, 1);
 }
 
 /**
- * Returns last element of $haystack
+ * Returns last element of $list
  * ---------------------------------------------------------------
- * $haystack : list
+ * $list : list
  */
-@function last($haystack) {
-  @return nth($haystack, length($haystack));
+@function last($list) {
+  @return nth($list, length($list));
 }
 
 /**
- * Joins all elements of $haystack with $glue
+ * Joins all elements of $list with $glue
  * ---------------------------------------------------------------
- * $haystack  : list
- * $glue      : value to use as a joiner
+ * $list      : list
+ * $glue      : value to use as a join string
  * $is-nested : strictly internal boolean for recursivity
  */
-@function to-string($haystack, $glue: '', $is-nested: false) {
-  $new: null;
+@function to-string($list, $glue: '', $is-nested: false) {
+  $result: null;
 
-  @for $i from 1 through length($haystack) {
-    $e: nth($haystack, $i);
+  @for $i from 1 through length($list) {
+    $e: nth($list, $i);
 
     @if type-of($e) == list {
-      $new: $new#{to-string($e, $glue, true)};
+      $result: $result#{to-string($e, $glue, true)};
     }
     
     @else {
-      $new: if($i != length($haystack) or $is-nested, $new#{$e}#{$glue}, $new#{$e});
+      $result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
     }
   }
 
-  @return $new;
+  @return $result;
 }
 
 /**
- * Returns last index of $needle in $haystack
+ * Returns last index of $value in $list
  * ---------------------------------------------------------------
- * $haystack : list
- * $needle   : value to be searched for
+ * $list  : list
+ * $value : value to be searched for
  */
-@function last-index($haystack, $needle) {
-  @for $i from length($haystack)*-1 through -1 {
-    @if nth($haystack, abs($i)) == $needle {
+@function last-index($list, $value) {
+  @for $i from length($list)*-1 through -1 {
+    @if nth($list, abs($i)) == $value {
       @return abs($i);
     }
   }
@@ -79,187 +79,186 @@
 }
 
 /**
- * Add $value as first index of $haystack
+ * Add $value as first index of $list
  * ---------------------------------------------------------------
- * $haystack : list
- * $value    : value to prepend to the list
+ * $list  : list
+ * $value : value to prepend to the list
  */
-@function prepend($haystack, $value) {
-  @return join($value, $haystack);
+@function prepend($list, $value) {
+  @return join($value, $list);
 }
 
 /** 
- * Add $value at index $needle in $haystack
- * If $needle is < 1, throws error
- * If $needle > length($haystack), append $value to $haystack
+ * Add $value at $index in $list
+ * If $index is < 1, throws error
+ * If $index > length($list), append $value to $list
  * ---------------------------------------------------------------
- * $haystack : list
- * $needle   : index to add
- * $value    : value to add
+ * $list  : list
+ * $index : index to add
+ * $value : value to add
  */
-@function insert-at($haystack, $needle, $value) {
-  $new: ();
+@function insert-at($list, $index, $value) {
+  $result: ();
 
-  @if $needle < 1 {
-    @warn "The needle has to be a positive integer.";
+  @if $index < 1 {
+    @warn "The index has to be a positive integer.";
   }
 
-  @else if $needle > length($haystack) {
-    $new: append($haystack, $value);
+  @else if $index > length($list) {
+    $result: append($list, $value);
   }
 
   @else {
-    @for $i from 1 through length($haystack) {
-      @if $i == $needle {
-        $new: append($new, $value);
+    @for $i from 1 through length($list) {
+      @if $i == $index {
+        $result: append($result, $value);
       }
-      $new: append($new, nth($haystack, $i));
+      $result: append($result, nth($list, $i));
     }
   }
 
-  @return $new;
+  @return $result;
 }
 
 
 /**
- * Replace value at index $needle from $haystack bu $value
+ * Replace value at $index from $list by $value
  * ---------------------------------------------------------------
- * $haystack : list
- * $needle   : index to update
- * $value    : new value for index $needle
+ * $list  : list
+ * $index : index to update
+ * $value : new value for index $index
  */
-@function replace-at($haystack, $needle, $value) {
-  $new: ();
+@function replace-at($list, $index, $value) {
+  $result: ();
 
-  @for $i from 1 through length($haystack) {
-    @if $i == $needle {
-      $new: append($new, $value);
+  @for $i from 1 through length($list) {
+    @if $i == $index {
+      $result: append($result, $value);
     }
     @else {
-      $new: append($new, nth($haystack, $i));
+      $result: append($result, nth($list, $i));
     }
   }
 
-  @return $new;
+  @return $result;
 }
 
 /** 
- * Replace $needle by $value in $haystack
+ * Replace $old-value by $new-value in $list
  * ---------------------------------------------------------------
- * $haystack  : list
+ * $list  : list
  * $old-value : value to replace
- * $new-value : new value for $needle
+ * $new-value : new value for $old-value
  * $recursive : enable / disable recursivity
  */
-@function replace($haystack, $old-value, $new-value, $recursive: false) {
-  $new: ();
+@function replace($list, $old-value, $new-value, $recursive: false) {
+  $result: ();
 
-  @for $i from 1 through length($haystack) {
-    @if type-of(nth($haystack, $i)) == list and $recursive {
-      $new: append($new, replace(nth($haystack, $i), $old-value, $new-value, $recursive));
+  @for $i from 1 through length($list) {
+    @if type-of(nth($list, $i)) == list and $recursive {
+      $result: append($result, replace(nth($list, $i), $old-value, $new-value, $recursive));
     }
 
     @else {
-      @if nth($haystack, $i) == $old-value {
-        $new: append($new, $new-value);
+      @if nth($list, $i) == $old-value {
+        $result: append($result, $new-value);
       }
 
       @else {
-        $new: append($new, nth($haystack, $i));
+        $result: append($result, nth($list, $i));
       }
     }
   }
 
-  @return $new;
+  @return $result;
 }
 
 /**
- * Remove value from $haystack at index $needle
+ * Remove value from $list at index $index
  * ---------------------------------------------------------------
- * $haystack : list
- * $needle   : index to remove
+ * $list  : list
+ * $index : index to remove
  */
-@function remove-at($haystack, $needle) {
-  $new: ();
+@function remove-at($list, $index) {
+  $result: ();
 
-  @for $i from 1 through length($haystack) {
-    @if $i != $needle {
-      $new: append($new, nth($haystack, $i));
+  @for $i from 1 through length($list) {
+    @if $i != $index {
+      $result: append($result, nth($list, $i));
     }
   }
 
-  @return $new;
+  @return $result;
 }
 
 /**
- * Remove value(s) $needle from $haystack
+ * Remove value(s) $value from $list
  * ---------------------------------------------------------------
- * $haystack  : list
- * $needle    : value to remove
+ * $list      : list
+ * $value     : value to remove
  * $recursive : enable / disable recursivity
  */
-@function remove($haystack, $needle, $recursive: false) {
-  $new: ();
+@function remove($list, $value, $recursive: false) {
+  $result: ();
 
-  @for $i from 1 through length($haystack) {
-    @if type-of(nth($haystack, $i)) == list and $recursive {
-      $new: append($new, remove(nth($haystack, $i), $needle, $recursive));
+  @for $i from 1 through length($list) {
+    @if type-of(nth($list, $i)) == list and $recursive {
+      $result: append($result, remove(nth($list, $i), $value, $recursive));
     }
 
-    @else if nth($haystack, $i) != $needle {
-      $new: append($new, nth($haystack, $i));
+    @else if nth($list, $i) != $value {
+      $result: append($result, nth($list, $i));
     }
   }
 
-  @return $new;
+  @return $result;
 }
 
 /**
- * Slices $haystack between $start and $end
+ * Slices $list between $start and $end
  * ---------------------------------------------------------------
- * $haystack : list
- * $start    : start index
- * $end      : end index
+ * $list  : list
+ * $start : start index
+ * $end   : end index
  */ 
-@function slice($haystack, $start: 1, $end: length($haystack)) {
-  $new: ();
-  $start: if($start <= 0, 1, if($start > length($haystack), length($haystack), $start));
-  $end: if($end > length($haystack), length($haystack), if($end < $start, $start, $end));
+@function slice($list, $start: 1, $end: length($list)) {
+  $result: ();
+  $start: if($start <= 0, 1, if($start > length($list), length($list), $start));
+  $end: if($end > length($list), length($list), if($end < $start, $start, $end));
 
   @for $i from $start through $end {
-     $new: append($new, nth($haystack, $i));
+     $result: append($result, nth($list, $i));
   }
 
-  @return $new;
+  @return $result;
 }
     
 /**
- * Reverses the order of $haystack
+ * Reverses the order of $list
  * ---------------------------------------------------------------
- * $haystack  : list
+ * $list      : list
  * $recursive : enable / disable recursivity
  */
-@function reverse($haystack, $recursive: false) {
-   $new: ();
+@function reverse($list, $recursive: false) {
+   $result: ();
 
-   @for $i from length($haystack)*-1 through -1 {
-      @if type-of(nth($haystack, abs($i))) == list and $recursive {
-        $new: append($new, reverse(nth($haystack, abs($i)), $recursive));      
+   @for $i from length($list)*-1 through -1 {
+      @if type-of(nth($list, abs($i))) == list and $recursive {
+        $result: append($result, reverse(nth($list, abs($i)), $recursive));      
       }
 
       @else {
-        $new: append($new, nth($haystack, abs($i)));
+        $result: append($result, nth($list, abs($i)));
       }
    }
 
-   @return $new;
+   @return $result;
 }
 
 
 /**
  * Usage
  */
-// Usage
 $list: a, b, c, d c, e, f, c;
 
 $test-first: first($list);                    // a
@@ -276,8 +275,8 @@ $test-last-index: last-index($list, z);       // null
 $test-prepend: prepend($list, z);             // z, a, b, c, d c, e, f, c
 $test-prepend: prepend($list, x y z);
 
-$test-insert-at: insert-at($list, -1, z);     // z, a, b, c, d c, e, f, c
-$test-insert-at: insert-at($list, 0, z);      // z, a, b, c, d c, e, f, c      
+$test-insert-at: insert-at($list, -1, z);     // throws error
+$test-insert-at: insert-at($list, 0, z);      // throws error
 $test-insert-at: insert-at($list, 4, z);      // a, b, c, z, d c, e, f, c
 $test-insert-at: insert-at($list, 100, z);    // a, b, c, d c, e, f, c, z
 

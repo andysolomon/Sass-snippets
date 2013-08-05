@@ -1,18 +1,18 @@
 /**
- * Slices $haystack between $start and $end
+ * Slices $list between $start and $end
  * ---------------------------------------------------------------
- * $haystack : list
- * $start    : start index
- * $end      : end index
+ * $list  : list
+ * $start : start index
+ * $end   : end index
  */ 
-@function slice($haystack, $start: 1, $end: length($haystack)) {
-  $new: ();
-  $start: if($start <= 0, 1, if($start > length($haystack), length($haystack), $start));
-  $end: if($end > length($haystack), length($haystack), if($end < $start, $start, $end));
+@function slice($list, $start: 1, $end: length($list)) {
+  $result: ();
+  $start: if($start <= 0, 1, if($start > length($list), length($list), $start));
+  $end: if($end > length($list), length($list), if($end < $start, $start, $end));
 
   @for $i from $start through $end {
-     $new: append($new, nth($haystack, $i));
+     $result: append($result, nth($list, $i));
   }
 
-  @return $new;
+  @return $result;
 }

@@ -1,8 +1,8 @@
 /**
- * Returns first element of $haystack
+ * Returns first element of $list
  * ---------------------------------------------------------------
- * $haystack : list
+ * $list : list
  */
-@function first($haystack) {
-  @return nth($haystack, 1);
+@function first($list) {
+  @return nth($list, 1);
 }

@@ -1,12 +1,12 @@
 /**
- * Returns last index of $needle in $haystack
+ * Returns last index of $value in $list
  * ---------------------------------------------------------------
- * $haystack : list
- * $needle   : value to be searched for
+ * $list  : list
+ * $value : value to be searched for
  */
-@function last-index($haystack, $needle) {
-  @for $i from length($haystack)*-1 through -1 {
-    @if nth($haystack, abs($i)) == $needle {
+@function last-index($list, $value) {
+  @for $i from length($list)*-1 through -1 {
+    @if nth($list, abs($i)) == $value {
       @return abs($i);
     }
   }

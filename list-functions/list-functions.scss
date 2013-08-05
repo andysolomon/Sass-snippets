@@ -40,8 +40,8 @@ $test-last-index: last-index($list, z);       // null
 $test-prepend: prepend($list, z);             // z, a, b, c, d c, e, f, c
 $test-prepend: prepend($list, x y z);
 
-$test-insert-at: insert-at($list, -1, z);     // z, a, b, c, d c, e, f, c
-$test-insert-at: insert-at($list, 0, z);      // z, a, b, c, d c, e, f, c      
+$test-insert-at: insert-at($list, -1, z);     // throws error
+$test-insert-at: insert-at($list, 0, z);      // throws error
 $test-insert-at: insert-at($list, 4, z);      // a, b, c, z, d c, e, f, c
 $test-insert-at: insert-at($list, 100, z);    // a, b, c, d c, e, f, c, z
 
