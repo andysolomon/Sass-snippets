@@ -9,7 +9,7 @@
 
    @for $i from length($haystack)*-1 through -1 {
       @if type-of(nth($haystack, abs($i))) == list and $recursive {
-        $new: append($new, reverse(nth($haystack, abs($i)), true));      
+        $new: append($new, reverse(nth($haystack, abs($i)), $recursive));      
       }
 
       @else {

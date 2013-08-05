@@ -156,7 +156,7 @@
 
   @for $i from 1 through length($haystack) {
     @if type-of(nth($haystack, $i)) == list and $recursive {
-      $new: append($new, replace(nth($haystack, $i), $needle, $value, true));
+      $new: append($new, replace(nth($haystack, $i), $needle, $value, $recursive));
     }
 
     @else {
@@ -203,7 +203,7 @@
 
   @for $i from 1 through length($haystack) {
     @if type-of(nth($haystack, $i)) == list and $recursive {
-      $new: append($new, remove(nth($haystack, $i), $needle, true));
+      $new: append($new, remove(nth($haystack, $i), $needle, $recursive));
     }
 
     @else if nth($haystack, $i) != $needle {
@@ -244,7 +244,7 @@
 
    @for $i from length($haystack)*-1 through -1 {
       @if type-of(nth($haystack, abs($i))) == list and $recursive {
-        $new: append($new, reverse(nth($haystack, abs($i)), true));      
+        $new: append($new, reverse(nth($haystack, abs($i)), $recursive));      
       }
 
       @else {

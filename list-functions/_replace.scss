@@ -11,7 +11,7 @@
 
   @for $i from 1 through length($haystack) {
     @if type-of(nth($haystack, $i)) == list and $recursive {
-      $new: append($new, replace(nth($haystack, $i), $needle, $value, true));
+      $new: append($new, replace(nth($haystack, $i), $needle, $value, $recursive));
     }
 
     @else {

@@ -10,7 +10,7 @@
 
   @for $i from 1 through length($haystack) {
     @if type-of(nth($haystack, $i)) == list and $recursive {
-      $new: append($new, remove(nth($haystack, $i), $needle, true));
+      $new: append($new, remove(nth($haystack, $i), $needle, $recursive));
     }
 
     @else if nth($haystack, $i) != $needle {
