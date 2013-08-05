@@ -9,7 +9,7 @@
   $new: null;
   @for $i from 1 through length($haystack) {
     @if type-of(nth($haystack, $i)) == list {
-      $new: $new#{merge(nth($haystack, $i), $value, true)};
+      $new: $new#{to-string(nth($haystack, $i), $value, true)};
     }
     @else {
       $new: $new#{nth($haystack, $i)};
