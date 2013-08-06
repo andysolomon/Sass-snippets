@@ -131,6 +131,10 @@
 @function replace-at($list, $index, $value) {
   $result: ();
 
+  @if $index < 1 {
+    @warn "The index has to be a positive integer.";
+  }
+
   @for $i from 1 through length($list) {
     @if $i == $index {
       $result: append($result, $value);
@@ -181,6 +185,10 @@
  */
 @function remove-at($list, $index) {
   $result: ();
+
+  @if $index < 1 {
+    @warn "The index has to be a positive integer.";
+  }
 
   @for $i from 1 through length($list) {
     @if $i != $index {
