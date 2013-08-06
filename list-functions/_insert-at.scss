@@ -15,7 +15,7 @@
   }
 
   @else if $index > length($list) {
-    $result: append($list, $value);
+    @warn "The index has to be within list range.";
   }
 
   @else {
@@ -23,6 +23,7 @@
       @if $i == $index {
         $result: append($result, $value);
       }
+
       $result: append($result, nth($list, $i));
     }
   }

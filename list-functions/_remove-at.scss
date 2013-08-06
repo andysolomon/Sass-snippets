@@ -11,6 +11,10 @@
     @warn "The index has to be a positive integer.";
   }
 
+  @else if $index > length($list) {
+    @warn "The index has to be within list range.";
+  }
+
   @for $i from 1 through length($list) {
     @if $i != $index {
       $result: append($result, nth($list, $i));

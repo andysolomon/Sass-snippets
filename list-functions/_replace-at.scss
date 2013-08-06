@@ -12,14 +12,20 @@
     @warn "The index has to be a positive integer.";
   }
 
-  @for $i from 1 through length($list) {
-    @if $i == $index {
-      $result: append($result, $value);
-    }
-    @else {
-      $result: append($result, nth($list, $i));
-    }
+  @else if $index > length($list) {
+    @warn "The index has to be within list range.";
   }
 
+  @else {
+    @for $i from 1 through length($list) {
+      @if $i == $index {
+        $result: append($result, $value);
+      }
+
+      @else {
+        $result: append($result, nth($list, $i));
+      }
+    }
+  }
   @return $result;
 }

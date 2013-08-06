@@ -105,7 +105,7 @@
   }
 
   @else if $index > length($list) {
-    $result: append($list, $value);
+    @warn "The index has to be within list range.";
   }
 
   @else {
@@ -113,13 +113,13 @@
       @if $i == $index {
         $result: append($result, $value);
       }
+
       $result: append($result, nth($list, $i));
     }
   }
 
   @return $result;
 }
-
 
 /**
  * Replace value at $index from $list by $value
@@ -135,15 +135,21 @@
     @warn "The index has to be a positive integer.";
   }
 
-  @for $i from 1 through length($list) {
-    @if $i == $index {
-      $result: append($result, $value);
-    }
-    @else {
-      $result: append($result, nth($list, $i));
-    }
+  @else if $index > length($list) {
+    @warn "The index has to be within list range.";
   }
 
+  @else {
+    @for $i from 1 through length($list) {
+      @if $i == $index {
+        $result: append($result, $value);
+      }
+
+      @else {
+        $result: append($result, nth($list, $i));
+      }
+    }
+  }
   @return $result;
 }
 
@@ -190,6 +196,10 @@
     @warn "The index has to be a positive integer.";
   }
 
+  @else if $index > length($list) {
+    @warn "The index has to be within list range.";
+  }
+
   @for $i from 1 through length($list) {
     @if $i != $index {
       $result: append($result, nth($list, $i));
@@ -231,11 +241,23 @@
  */ 
 @function slice($list, $start: 1, $end: length($list)) {
   $result: ();
-  $start: if($start <= 0, 1, if($start > length($list), length($list), $start));
-  $end: if($end > length($list), length($list), if($end < $start, $start, $end));
 
-  @for $i from $start through $end {
-     $result: append($result, nth($list, $i));
+  @if $start > $end {
+    @warn "The start index has to be lesser than or equals to the end index.";
+  }
+
+  @else if $start < 1 or $end < 1 {
+    @warn "The indexes have to be positive integers.";
+  }
+
+  @else if $start > length($list) or $end > length($list) {
+    @warn "The index has to be within list range.";
+  }
+  
+  @else {
+    @for $i from $start through $end {
+      $result: append($result, nth($list, $i));
+    }
   }
 
   @return $result;
@@ -274,41 +296,41 @@ $test-first: first($list);                    // a
 $test-last: last($list);                      // c
 
 $test-to-string: to-string($list);            // abcdcefc
-$test-to-string: to-string($list, '');        // abcdcefc
 $test-to-string: to-string($list, "-");       // a-b-c-d-c-e-f-c
 
 $test-last-index: last-index($list, c);       // 7
 $test-last-index: last-index($list, z);       // null
 
 $test-prepend: prepend($list, z);             // z, a, b, c, d c, e, f, c
-$test-prepend: prepend($list, x y z);
+$test-prepend: prepend($list, y z);           // y z, a, b, c, d c, e, f, c
 
-$test-insert-at: insert-at($list, -1, z);     // throws error
-$test-insert-at: insert-at($list, 0, z);      // throws error
+$test-insert-at: insert-at($list, -1, z);     // error
+$test-insert-at: insert-at($list, 0, z);      // error
 $test-insert-at: insert-at($list, 4, z);      // a, b, c, z, d c, e, f, c
-$test-insert-at: insert-at($list, 100, z);    // a, b, c, d c, e, f, c, z
+$test-insert-at: insert-at($list, 100, z);    // error
 
 $test-replace: replace($list, c, z);          // a, b, z, d c, e, f, z
 $test-replace: replace($list, c, z, true);    // a, b, z, d z, e, f, z
 $test-replace: replace($list, z, y);          // a, b, c, d c, e, f, c
 
-$test-replace-at: replace-at($list, -1, z);   // a, b, c, d c, e, f, c
+$test-replace-at: replace-at($list, -1, z);   // error
+$test-replace-at: replace-at($list, 0, z);    // error
 $test-replace-at: replace-at($list, 4, z);    // a, b, c, z, e, f, c
-$test-replace-at: replace-at($list, 100, z);  // a, b, c, d c, e, f, c
+$test-replace-at: replace-at($list, 100, z);  // error
 
 $test-remove: remove($list, c);               // a, b, d c, e, f
 $test-remove: remove($list, c, true);         // a, b, d, e, f
 $test-remove: remove($list, z);               // a, b, c, d c, e, f, c
 
-$test-remove-at: remove-at($list, -1);        // a, b, c, d c, e, f, c
-$test-remove-at: remove-at($list, 0);         // a, b, c, d c, e, f, c
+$test-remove-at: remove-at($list, -1);        // error
+$test-remove-at: remove-at($list, 0);         // error
 $test-remove-at: remove-at($list, 1);         // b, c, d c, e, f, c
-$test-remove-at: remove-at($list, 100);       // a, b, c, d c, e, f, c
+$test-remove-at: remove-at($list, 100);       // error
 
 $test-slice: slice($list);                    // a, b, c, d c, e, f, c
 $test-slice: slice($list, 3, 6);              // c, d c, e, f
-$test-slice: slice($list, 5, 4);              // e
-$test-slice: slice($list, -100, 100);         // a, b, c, d c, e, f, c
+$test-slice: slice($list, 5, 4);              // error
+$test-slice: slice($list, -100, 100);         // error
 
 $test-reverse: reverse($list);                // c, f, e, d c, c, b, a
 $test-reverse: reverse($list, true);          // c, f, e, c d, c, b, a

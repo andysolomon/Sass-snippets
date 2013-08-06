@@ -7,11 +7,23 @@
  */ 
 @function slice($list, $start: 1, $end: length($list)) {
   $result: ();
-  $start: if($start <= 0, 1, if($start > length($list), length($list), $start));
-  $end: if($end > length($list), length($list), if($end < $start, $start, $end));
 
-  @for $i from $start through $end {
-     $result: append($result, nth($list, $i));
+  @if $start > $end {
+    @warn "The start index has to be lesser than or equals to the end index.";
+  }
+
+  @else if $start < 1 or $end < 1 {
+    @warn "The indexes have to be positive integers.";
+  }
+
+  @else if $start > length($list) or $end > length($list) {
+    @warn "The index has to be within list range.";
+  }
+  
+  @else {
+    @for $i from $start through $end {
+      $result: append($result, nth($list, $i));
+    }
   }
 
   @return $result;
