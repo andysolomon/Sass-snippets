@@ -18,6 +18,7 @@
 @import "remove-at";
 @import "slice";
 @import "reverse";
+@import "cycle";
 
 // Or all in one
 // @import "all";
@@ -69,3 +70,7 @@ $test-slice: slice($list, -100, 100);         // error
 
 $test-reverse: reverse($list);                // c, f, e, d c, c, b, a
 $test-reverse: reverse($list, true);          // c, f, e, c d, c, b, a
+
+$test-cycle: cycle($list);                    // c, a, b, c, d c, e, f
+$test-cycle: cycle($list, 2);                 // f, c, a, b, c, d c, e
+$test-cycle: cycle($list, -2);                // c, d c, e, f, c, a, b

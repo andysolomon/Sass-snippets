@@ -13,6 +13,7 @@
  * remove-at($list, $index)
  * slice($list, $start: 1, $end: length($list))
  * reverse($list, $recursive: false)
+ * cycle($list, $value: 1)
  * --------------------------------------------------------------- *
  * CodePen: http://codepen.io/HugoGiraudel/pen/loAgq
  * Repository: https://github.com/HugoGiraudel/Sass-snippets/blob/master/src/list-functions/
@@ -285,6 +286,26 @@
    @return $result;
 }
 
+/**
+ * Move values from $list of $value
+ * ---------------------------------------------------------------
+ * $list  : list
+ * $value : number of indexes to be used to move values
+ */
+@function cycle($list, $value: 1) {
+  $result: ();
+  
+  @if length($list) == 1 {
+    @return $list;
+  }
+    
+  @for $i from 0 to length($list) {
+    $result: append($result, nth($list, ($i - $value) % length($list) + 1));
+  }
+  
+  @return $result;
+}
+
 
 /**
  * Usage
@@ -334,3 +355,7 @@ $test-slice: slice($list, -100, 100);         // error
 
 $test-reverse: reverse($list);                // c, f, e, d c, c, b, a
 $test-reverse: reverse($list, true);          // c, f, e, c d, c, b, a
+
+$test-cycle: cycle($list);                    // c, a, b, c, d c, e, f
+$test-cycle: cycle($list, 2);                 // f, c, a, b, c, d c, e
+$test-cycle: cycle($list, -2);                // c, d c, e, f, c, a, b
