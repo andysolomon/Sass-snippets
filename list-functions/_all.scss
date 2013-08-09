@@ -6,11 +6,11 @@
  * to-string($list, $glue: '', $is-nested: false)
  * last-index($list, $value)
  * prepend($list, $value)
- * insert-at($list, $index, $value)
+ * insert-nth($list, $index, $value)
  * replace($list, $old-value, $new-value, $recursive: false)
- * replace-at($list, $index, $value)
+ * replace-nth($list, $index, $value)
  * remove($list, $value, $recursive: false)
- * remove-at($list, $index)
+ * remove-nth($list, $index)
  * slice($list, $start: 1, $end: length($list))
  * reverse($list, $recursive: false)
  * loop($list, $value: 1)
@@ -98,15 +98,22 @@
  * $index : index to add
  * $value : value to add
  */
-@function insert-at($list, $index, $value) {
+@function insert-nth($list, $index, $value) {
   $result: ();
+      
+  @if type-of($index) != number {
+    @warn "$index: #{quote($index)} is not a number for `insert-nth`.";
+    @return null;
+  }
 
   @if $index < 1 {
-    @warn "The index has to be a positive integer.";
+    @warn "List index 0 must be a non-zero integer for `insert-nth`";
+    @return null;
   }
 
   @else if $index > length($list) {
-    @warn "The index has to be within list range.";
+    @warn "List index is #{$index} but list is only #{length($list)} item long for `insert-nth'.";
+    @return null;
   }
 
   @else {
@@ -124,33 +131,42 @@
 
 /**
  * Replace value at $index from $list by $value
+ * If $index is negative, starts from end of $list
  * ---------------------------------------------------------------
  * $list  : list
  * $index : index to update
  * $value : new value for index $index
  */
-@function replace-at($list, $index, $value) {
+@function replace-nth($list, $index, $value) {
+      
+  @if type-of($index) != number {
+    @warn "$index: #{quote($index)} is not a number for `replace-nth`.";
+    @return null;
+  }
+
+  @if $index == 0 {
+    @warn "List index 0 must be a non-zero integer for `replace-nth`.";
+    @return null;
+  }
+      
+  @if abs($index) > length($list) {
+    @warn "List index is #{$index} but list is only #{length($list)} item long for `replace-nth`.";
+    @return null;
+  }
+
   $result: ();
+  $index: if($index < 0, length($list) + $index + 1, $index);  
 
-  @if $index < 1 {
-    @warn "The index has to be a positive integer.";
-  }
-
-  @else if $index > length($list) {
-    @warn "The index has to be within list range.";
-  }
-
-  @else {
-    @for $i from 1 through length($list) {
-      @if $i == $index {
-        $result: append($result, $value);
-      }
-
-      @else {
-        $result: append($result, nth($list, $i));
-      }
+  @for $i from 1 through length($list) {
+    @if $i == $index {
+      $result: append($result, $value);
+    }
+    
+    @else {
+      $result: append($result, nth($list, $i));
     }
   }
+ 
   @return $result;
 }
 
@@ -186,20 +202,30 @@
 
 /**
  * Remove value from $list at index $index
+ * If $index is negative, starts from end of $list
  * ---------------------------------------------------------------
  * $list  : list
  * $index : index to remove
  */
-@function remove-at($list, $index) {
+@function remove-nth($list, $index) {
+        
+  @if type-of($index) != number {
+    @warn "$index: #{quote($index)} is not a number for `remove-nth`.";
+    @return null;
+  }
+
+  @if $index == 0 {
+    @warn "List index 0 must be a non-zero integer for `remove-nth`.";
+    @return null;
+  }
+
+  @else if abs($index) > length($list) {
+    @warn "List index is #{$index} but list is only #{length($list)} item long for `remove-nth`.";
+    @return null;
+  }
+
   $result: ();
-
-  @if $index < 1 {
-    @warn "The index has to be a positive integer.";
-  }
-
-  @else if $index > length($list) {
-    @warn "The index has to be within list range.";
-  }
+  $index: if($index < 0, length($list) + $index + 1, $index);  
 
   @for $i from 1 through length($list) {
     @if $i != $index {
@@ -242,17 +268,35 @@
  */ 
 @function slice($list, $start: 1, $end: length($list)) {
   $result: ();
+              
+  @if type-of($start) != number {
+    @warn "$start: #{quote($start)} is not a number for `slice`.";
+    @return null;
+  }
+              
+  @if type-of($end) != number {
+    @warn "$end: #{quote($end)} is not a number for `slice`.";
+    @return null;
+  }
 
   @if $start > $end {
     @warn "The start index has to be lesser than or equals to the end index.";
+    @return null;
   }
 
   @else if $start < 1 or $end < 1 {
-    @warn "The indexes have to be positive integers.";
+    @warn "List index 0 must be a non-zero integer for `slice`.";
+    @return null;
   }
 
-  @else if $start > length($list) or $end > length($list) {
-    @warn "The index has to be within list range.";
+  @else if $start > length($list) {
+    @warn "List index is #{$start} but list is only #{length($list)} item long for `slice`.";
+    @return null;
+  }
+             
+  @else if $end > length($list) {
+    @warn "List index is #{$end} but list is only #{length($list)} item long for `slice`.";
+    @return null;
   }
   
   @else {
@@ -308,50 +352,52 @@
  */
 $list: a, b, c, d c, e, f, c;
 
-$test-first: first($list);                    // a
+$test-first: first($list);                     // a
 
-$test-last: last($list);                      // c
+$test-last: last($list);                       // c
 
-$test-to-string: to-string($list);            // abcdcefc
-$test-to-string: to-string($list, "-");       // a-b-c-d-c-e-f-c
+$test-to-string: to-string($list);             // abcdcefc
+$test-to-string: to-string($list, "-");        // a-b-c-d-c-e-f-c
 
-$test-last-index: last-index($list, c);       // 7
-$test-last-index: last-index($list, z);       // null
+$test-last-index: last-index($list, c);        // 7
+$test-last-index: last-index($list, z);        // null
 
-$test-prepend: prepend($list, z);             // z, a, b, c, d c, e, f, c
-$test-prepend: prepend($list, y z);           // y z, a, b, c, d c, e, f, c
+$test-prepend: prepend($list, z);              // z, a, b, c, d c, e, f, c
+$test-prepend: prepend($list, y z);            // y z, a, b, c, d c, e, f, c
 
-$test-insert-at: insert-at($list, -1, z);     // error
-$test-insert-at: insert-at($list, 0, z);      // error
-$test-insert-at: insert-at($list, 4, z);      // a, b, c, z, d c, e, f, c
-$test-insert-at: insert-at($list, 100, z);    // error
+$test-insert-nth: insert-nth($list, -1, z);    // error
+$test-insert-nth: insert-nth($list, 0, z);     // error
+$test-insert-nth: insert-nth($list, 4, z);     // a, b, c, z, d c, e, f, c
+$test-insert-nth: insert-nth($list, 100, z);   // error
 
-$test-replace: replace($list, c, z);          // a, b, z, d c, e, f, z
-$test-replace: replace($list, c, z, true);    // a, b, z, d z, e, f, z
-$test-replace: replace($list, z, y);          // a, b, c, d c, e, f, c
+$test-replace: replace($list, c, z);           // a, b, z, d c, e, f, z
+$test-replace: replace($list, c, z, true);     // a, b, z, d z, e, f, z
+$test-replace: replace($list, z, y);           // a, b, c, d c, e, f, c
 
-$test-replace-at: replace-at($list, -1, z);   // error
-$test-replace-at: replace-at($list, 0, z);    // error
-$test-replace-at: replace-at($list, 4, z);    // a, b, c, z, e, f, c
-$test-replace-at: replace-at($list, 100, z);  // error
+$test-replace-nth: replace-nth($list, -10, z); // error
+$test-replace-nth: replace-nth($list, -1, z);  // a, b, c, d c, e, f, z 
+$test-replace-nth: replace-nth($list, 0, z);   // error
+$test-replace-nth: replace-nth($list, 4, z);   // a, b, c, z, e, f, c
+$test-replace-nth: replace-nth($list, 100, z); // error
 
-$test-remove: remove($list, c);               // a, b, d c, e, f
-$test-remove: remove($list, c, true);         // a, b, d, e, f
-$test-remove: remove($list, z);               // a, b, c, d c, e, f, c
+$test-remove: remove($list, c);                // a, b, d c, e, f
+$test-remove: remove($list, c, true);          // a, b, d, e, f
+$test-remove: remove($list, z);                // a, b, c, d c, e, f, c
 
-$test-remove-at: remove-at($list, -1);        // error
-$test-remove-at: remove-at($list, 0);         // error
-$test-remove-at: remove-at($list, 1);         // b, c, d c, e, f, c
-$test-remove-at: remove-at($list, 100);       // error
+$test-remove-nth: remove-nth($list, -10);      // error
+$test-remove-nth: remove-nth($list, -1);       // a, b, c, d c, e, f
+$test-remove-nth: remove-nth($list, 0);        // error
+$test-remove-nth: remove-nth($list, 1);        // b, c, d c, e, f, c
+$test-remove-nth: remove-nth($list, 100);      // error 
 
-$test-slice: slice($list);                    // a, b, c, d c, e, f, c
-$test-slice: slice($list, 3, 6);              // c, d c, e, f
-$test-slice: slice($list, 5, 4);              // error
-$test-slice: slice($list, -100, 100);         // error
+$test-slice: slice($list);                     // a, b, c, d c, e, f, c
+$test-slice: slice($list, 3, 6);               // c, d c, e, f
+$test-slice: slice($list, 5, 4);               // error
+$test-slice: slice($list, -100, 100);          // error
 
-$test-reverse: reverse($list);                // c, f, e, d c, c, b, a
-$test-reverse: reverse($list, true);          // c, f, e, c d, c, b, a
+$test-reverse: reverse($list);                 // c, f, e, d c, c, b, a
+$test-reverse: reverse($list, true);           // c, f, e, c d, c, b, a
 
-$test-loop: loop($list);                      // c, a, b, c, d c, e, f
-$test-loop: loop($list, 2);                   // f, c, a, b, c, d c, e
-$test-loop: loop($list, -2);                  // c, d c, e, f, c, a, b
+$test-loop: loop($list);                       // c, a, b, c, d c, e, f
+$test-loop: loop($list, 2);                    // f, c, a, b, c, d c, e
+$test-loop: loop($list, -2);                   // c, d c, e, f, c, a, b
