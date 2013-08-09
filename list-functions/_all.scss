@@ -99,24 +99,23 @@
  * $value : value to add
  */
 @function insert-nth($list, $index, $value) {
-  $result: ();
+  $result: null;
       
   @if type-of($index) != number {
     @warn "$index: #{quote($index)} is not a number for `insert-nth`.";
-    @return null;
   }
 
-  @if $index < 1 {
+  @else if $index < 1 {
     @warn "List index 0 must be a non-zero integer for `insert-nth`";
-    @return null;
   }
 
   @else if $index > length($list) {
     @warn "List index is #{$index} but list is only #{length($list)} item long for `insert-nth'.";
-    @return null;
   }
 
   @else {
+    $result: ();
+        
     @for $i from 1 through length($list) {
       @if $i == $index {
         $result: append($result, $value);
@@ -138,32 +137,32 @@
  * $value : new value for index $index
  */
 @function replace-nth($list, $index, $value) {
+  $result: null;
       
   @if type-of($index) != number {
     @warn "$index: #{quote($index)} is not a number for `replace-nth`.";
-    @return null;
   }
 
-  @if $index == 0 {
+  @else if $index == 0 {
     @warn "List index 0 must be a non-zero integer for `replace-nth`.";
-    @return null;
   }
       
-  @if abs($index) > length($list) {
+  @else if abs($index) > length($list) {
     @warn "List index is #{$index} but list is only #{length($list)} item long for `replace-nth`.";
-    @return null;
   }
 
-  $result: ();
-  $index: if($index < 0, length($list) + $index + 1, $index);  
+  @else {
+    $result: ();
+    $index: if($index < 0, length($list) + $index + 1, $index);  
 
-  @for $i from 1 through length($list) {
-    @if $i == $index {
-      $result: append($result, $value);
-    }
+    @for $i from 1 through length($list) {
+      @if $i == $index {
+        $result: append($result, $value);
+      }
     
-    @else {
-      $result: append($result, nth($list, $i));
+      @else {
+        $result: append($result, nth($list, $i));
+      }
     }
   }
  
@@ -208,31 +207,31 @@
  * $index : index to remove
  */
 @function remove-nth($list, $index) {
+  $result: null;
         
   @if type-of($index) != number {
     @warn "$index: #{quote($index)} is not a number for `remove-nth`.";
-    @return null;
   }
 
-  @if $index == 0 {
+  @else if $index == 0 {
     @warn "List index 0 must be a non-zero integer for `remove-nth`.";
-    @return null;
   }
 
   @else if abs($index) > length($list) {
     @warn "List index is #{$index} but list is only #{length($list)} item long for `remove-nth`.";
-    @return null;
   }
 
-  $result: ();
-  $index: if($index < 0, length($list) + $index + 1, $index);  
+  @else {
+    $result: ();
+    $index: if($index < 0, length($list) + $index + 1, $index);  
 
-  @for $i from 1 through length($list) {
-    @if $i != $index {
-      $result: append($result, nth($list, $i));
+    @for $i from 1 through length($list) {
+      @if $i != $index {
+        $result: append($result, nth($list, $i));
+      }
     }
   }
-
+        
   @return $result;
 }
 
@@ -267,39 +266,31 @@
  * $end   : end index
  */ 
 @function slice($list, $start: 1, $end: length($list)) {
-  $result: ();
+  $result: null;
               
-  @if type-of($start) != number {
-    @warn "$start: #{quote($start)} is not a number for `slice`.";
-    @return null;
+  @if type-of($start) != number or type-of($end) != number {
+    @warn "Either $start or $end are not a number for `slice`.";
   }
-              
-  @if type-of($end) != number {
-    @warn "$end: #{quote($end)} is not a number for `slice`.";
-    @return null;
-  }
-
-  @if $start > $end {
+             
+  @else if $start > $end {
     @warn "The start index has to be lesser than or equals to the end index.";
-    @return null;
   }
 
   @else if $start < 1 or $end < 1 {
-    @warn "List index 0 must be a non-zero integer for `slice`.";
-    @return null;
+    @warn "List indexes must be non-zero integers for `slice`.";
   }
 
   @else if $start > length($list) {
     @warn "List index is #{$start} but list is only #{length($list)} item long for `slice`.";
-    @return null;
   }
              
   @else if $end > length($list) {
     @warn "List index is #{$end} but list is only #{length($list)} item long for `slice`.";
-    @return null;
   }
   
   @else {
+    $result: ();
+                
     @for $i from $start through $end {
       $result: append($result, nth($list, $i));
     }
@@ -365,10 +356,10 @@ $test-last-index: last-index($list, z);        // null
 $test-prepend: prepend($list, z);              // z, a, b, c, d c, e, f, c
 $test-prepend: prepend($list, y z);            // y z, a, b, c, d c, e, f, c
 
-$test-insert-nth: insert-nth($list, -1, z);    // error
-$test-insert-nth: insert-nth($list, 0, z);     // error
-$test-insert-nth: insert-nth($list, 4, z);     // a, b, c, z, d c, e, f, c
-$test-insert-nth: insert-nth($list, 100, z);   // error
+$test-insert-nth: insert-nth($list, -1, z);      // error
+$test-insert-nth: insert-nth($list, 0, z);       // error
+$test-insert-nth: insert-nth($list, 4, z);       // a, b, c, z, d c, e, f, c
+$test-insert-nth: insert-nth($list, 100, z);     // error
 
 $test-replace: replace($list, c, z);           // a, b, z, d c, e, f, z
 $test-replace: replace($list, c, z, true);     // a, b, z, d z, e, f, z
