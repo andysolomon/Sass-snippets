@@ -54,7 +54,7 @@
  * -------------------------------------------------------------------------------
  * @param $list [List] : list
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::List]
+ * @return [Literal]
  */
 @function first($list) {
   @return nth($list, 1);
@@ -67,7 +67,7 @@
  * -------------------------------------------------------------------------------
  * @param $list [List] : list
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::List]
+ * @return [Literal]
  */
 @function last($list) {
   @return nth($list, length($list));
@@ -82,7 +82,7 @@
  * @param $list [List] : list
  * @param $value [Literal] : value to be searched for
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::Number]
+ * @return [Number]
  */
 @function last-index($list, $value) {
   @for $i from length($list)*-1 through -1 {
@@ -105,7 +105,7 @@
  * @param $glue [String] : value to use as a join string
  * @param $is-nested [Boolean] : strictly internal boolean for recursivity
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::String]
+ * @return [String]
  */
 @function to-string($list, $glue: '', $is-nested: false) {
   $result: null;
@@ -134,7 +134,7 @@
  * @param $list [List] : list
  * @param $value [Literal] : value to prepend to the list
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::List]
+ * @return [List]
  */
 @function prepend($list, $value) {
   @return join($value, $list);
@@ -154,7 +154,7 @@
  * -------------------------------------------------------------------------------
  * @raise [ArgumentError] if $index isn't an integer between 1 and the length
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::List]
+ * @return [List]
  */
 @function insert-nth($list, $index, $value) {
   $result: null;
@@ -202,7 +202,7 @@
  * @raise [ArgumentError] if $index isn't an integer between -length and length
  * @raise [ArgumentError] if $index is 0
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::List]
+ * @return [List]
  */
 @function replace-nth($list, $index, $value) {
   $result: null;
@@ -250,7 +250,7 @@
  * @param $new-value [Literal] : new value for $old-value
  * @param $recursive [Boolean] : enable / disable recursivity
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::List]
+ * @return [List]
  */
 @function replace($list, $old-value, $new-value, $recursive: false) {
   $result: ();
@@ -289,7 +289,7 @@
  * @raise [ArgumentError] if $index isn't an integer between -length and length
  * @raise [ArgumentError] if $index is 0
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::List]
+ * @return [List]
  */
 @function remove-nth($list, $index) {
   $result: null;
@@ -332,7 +332,7 @@
  * @param $value [Literal] : value to remove
  * @param $recursive [Boolean] : enable / disable recursivity
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::List]
+ * @return [List]
  */
 @function remove($list, $value, $recursive: false) {
   $result: ();
@@ -367,7 +367,7 @@
  * @raise [ArgumentError] if $start or $end aren't integers between 1 and length
  * @raise [ArgumentError] if $start is greater than $end
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::List]
+ * @return [List]
  */ 
 @function slice($list, $start: 1, $end: length($list)) {
   $result: null;
@@ -414,7 +414,7 @@
  * @param $list [List] : list
  * @param $recursive [Boolean] : enable / disable recursivity
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::List]
+ * @return [List]
  */
 @function reverse($list, $recursive: false) {
    $result: ();
@@ -442,7 +442,7 @@
  * @param $list [List] : list
  * @param $value [Number] : number of position between old and new indexes
  * -------------------------------------------------------------------------------
- * @return [Sass::Script::Value::List]
+ * @return [List]
  */
 @function loop($list, $value: 1) {
   $result: ();
