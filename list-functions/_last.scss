@@ -1,8 +1,0 @@
-/**
- * Returns last element of $list
- * ---------------------------------------------------------------
- * $list : list
- */
-@function last($list) {
-  @return nth($list, length($list));
-}

@@ -1,8 +1,0 @@
-/**
- * Returns first element of $list
- * ---------------------------------------------------------------
- * $list : list
- */
-@function first($list) {
-  @return nth($list, 1);
-}

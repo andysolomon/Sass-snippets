@@ -1,9 +1,0 @@
-/**
- * Add $value as first index of $list
- * ---------------------------------------------------------------
- * $list  : list
- * $value : value to prepend to the list
- */
-@function prepend($list, $value) {
-  @return join($value, $list);
-}
