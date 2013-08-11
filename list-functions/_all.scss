@@ -152,7 +152,9 @@
  * @param $index [Number] : index to add
  * @param $value [Literal] : value to add
  * -------------------------------------------------------------------------------
- * @raise [ArgumentError] if $index isn't an integer between 1 and the length
+ * @raise [Error] if $index isn't an integer
+ * @raise [Error] if $index is strictly lesser than 1
+ * @raise [Error] if $index is strictly greater than length of $list
  * -------------------------------------------------------------------------------
  * @return [List]
  */
@@ -199,8 +201,9 @@
  * @param $index [Number] : index to update
  * @param $value [Literal] : new value for index $index
  * -------------------------------------------------------------------------------
- * @raise [ArgumentError] if $index isn't an integer between -length and length
- * @raise [ArgumentError] if $index is 0
+ * @raise [Error] if $index isn't an integer
+ * @raise [Error] if $index is 0
+ * @raise [Error] if abs value of $index is strictly greater than length of $list
  * -------------------------------------------------------------------------------
  * @return [List]
  */
@@ -286,8 +289,9 @@
  * @param $list [List] : list
  * @param $index [Number] : index to remove
  * -------------------------------------------------------------------------------
- * @raise [ArgumentError] if $index isn't an integer between -length and length
- * @raise [ArgumentError] if $index is 0
+ * @raise [Error] if $index isn't an integer
+ * @raise [Error] if $index is 0
+ * @raise [Error] if abs value of $index is strictly greater then length of $list
  * -------------------------------------------------------------------------------
  * @return [List]
  */
@@ -364,8 +368,11 @@
  * @param $start [Number] : start index
  * @param $end [Number] : end index
  * -------------------------------------------------------------------------------
- * @raise [ArgumentError] if $start or $end aren't integers between 1 and length
- * @raise [ArgumentError] if $start is greater than $end
+ * @raise [Error] if $start or $end aren't integers
+ * @raise [Error] if $start is greater than $end
+ * @raise [Error] if $start or $end is strictly lesser than 1
+ * @raise [Error] if $start is strictly greater than length of $list
+ * @raise [Error] if $end is strictly greater than length of $list
  * -------------------------------------------------------------------------------
  * @return [List]
  */ 
@@ -377,7 +384,7 @@
   }
              
   @else if $start > $end {
-    @warn "The start index has to be lesser than or equals to the end index.";
+    @warn "The start index has to be lesser than or equals to the end index for `slice`.";
   }
 
   @else if $start < 1 or $end < 1 {
