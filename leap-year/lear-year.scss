@@ -1,0 +1,16 @@
+/* --------------------------------------------------------------- *
+ * A function to check whether a year is leap
+ * --------------------------------------------------------------- */
+
+/**
+ * Test is $year is leap
+ * ---------------------------------------------------------------
+ * @param $year year to check
+ * @return boolean
+ * ---------------------------------------------------------------
+ * @example is-leap(2000); -> true
+ * @example is-leap(2013); -> false
+ */
+@function is-leap($year) {
+  @return $year % 4 == 0 and $year % 100 != 0 or $year % 400 == 0;
+}
