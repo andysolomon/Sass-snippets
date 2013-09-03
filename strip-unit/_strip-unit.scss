@@ -5,14 +5,20 @@
 /**
  * Strip unit from length
  * ---------------------------------------------------------------
+ * @example strip-unit(42em) => 42
+ * @example strip-unit(buzz) => false
+ * ---------------------------------------------------------------
  * $value : length to strip unit from
+ * ---------------------------------------------------------------
+ * @raise [Error] if $value not a number
+ * ---------------------------------------------------------------
+ * @return [Number] | false
  */
 @function strip-unit($value) {
-    @return $value / ($value * 0 + 1);
+  @if type-of($value) != number {
+    @warn "#{$value} is not a number for `strip-unit`.";
+    @return false;
+  }
+  
+  @return $value / ($value * 0 + 1);
 }
-
-/**
- * Usage
- */
-$value-with-unit: 42em;
-$value-without-unit: strip-unit($value-with-unit); // 42
