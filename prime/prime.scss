@@ -1,5 +1,6 @@
 /* --------------------------------------------------------------- *
  * A function to check whether a number is prime or not
+ * Demo: http://codepen.io/HugoGiraudel/pen/wiFHk
  * --------------------------------------------------------------- */
 
 /** 
@@ -10,12 +11,14 @@
  * ---------------------------------------------------------------
  * @example is-prime(1254); -> false
  * @example is-prime(359);  -> true
+ * @example is-prime(buzz); -> null
  */
 @function is-prime($n) {
   @if type-of($n) != number {
-  	@warn "Must be a number.";
-    @return false;
+    @warn "#{$n} is not a number for `is-prime`.";
+    @return null;
   }
+  
   @if ($n % 2 == 0) { @return $n == 2 }
   @if ($n % 3 == 0) { @return $n == 3 }
   
