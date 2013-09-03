@@ -1,5 +1,6 @@
 /* --------------------------------------------------------------- *
  * A function to check whether a year is leap
+ * Demo: http://codepen.io/HugoGiraudel/pen/qrjmd
  * --------------------------------------------------------------- */
 
 /**
@@ -17,5 +18,6 @@
     @warn "#{$year} is not a number for `is-leap`.";
     @return null;
   }
+  
   @return $year % 4 == 0 and $year % 100 != 0 or $year % 400 == 0;
 }
