@@ -50,7 +50,8 @@
 /**
  * Returns first element of $list
  * -------------------------------------------------------------------------------
- * @example first(a, b, c) => a
+ * @example first( (a, b, c) ) => a
+ * @example first( a )         => a
  * -------------------------------------------------------------------------------
  * @param $list [List] : list
  * -------------------------------------------------------------------------------
@@ -64,6 +65,7 @@
  * Returns last element of $list
  * -------------------------------------------------------------------------------
  * @example last( (a, b, c) ) => c
+ * @example last( a )         => a
  * -------------------------------------------------------------------------------
  * @param $list [List] : list
  * -------------------------------------------------------------------------------
@@ -76,13 +78,13 @@
 /**
  * Returns last index of $value in $list
  * -------------------------------------------------------------------------------
- * @example last-index( (a, b, c), z )    => null
  * @example last-index( (a, b, c, a), a ) => 4
+ * @example last-index( (a, b, c), z )    => null
  * -------------------------------------------------------------------------------
  * @param $list [List] : list
  * @param $value [Literal] : value to be searched for
  * -------------------------------------------------------------------------------
- * @return [Number]
+ * @return [Number] | null
  */
 @function last-index($list, $value) {
   @for $i from length($list)*-1 through -1 {
@@ -156,7 +158,7 @@
  * @raise [Error] if $index is strictly lesser than 1
  * @raise [Error] if $index is strictly greater than length of $list
  * -------------------------------------------------------------------------------
- * @return [List]
+ * @return [List] | false
  */
 @function insert-nth($list, $index, $value) {
   $result: false;
@@ -208,7 +210,7 @@
  * @raise [Error] if $index is 0
  * @raise [Error] if abs value of $index is strictly greater than length of $list
  * -------------------------------------------------------------------------------
- * @return [List]
+ * @return [List] | false
  */
 @function replace-nth($list, $index, $value) {
   $result: false;
@@ -299,7 +301,7 @@
  * @raise [Error] if $index is 0
  * @raise [Error] if abs value of $index is strictly greater then length of $list
  * -------------------------------------------------------------------------------
- * @return [List]
+ * @return [List] | false
  */
 @function remove-nth($list, $index) {
   $result: false;
@@ -383,7 +385,7 @@
  * @raise [Error] if $start is strictly greater than length of $list
  * @raise [Error] if $end is strictly greater than length of $list
  * -------------------------------------------------------------------------------
- * @return [List]
+ * @return [List] | false
  */ 
 @function slice($list, $start: 1, $end: length($list)) {
   $result: false;
