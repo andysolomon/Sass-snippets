@@ -7,10 +7,27 @@
 /**
  * Clamp function
  * ---------------------------------------------------------------
- * $value : value to clamp
- * $min   : minimum value
- * $max   : maximum value
+ * @example clamp(10, 0, 100)  => 10
+ * @example clamp(10, 0, 10)   => 10
+ * @example clamp(10, -5, 5)   => 5
+ * @example clamp(10, 15, 25)  => 15
+ * @example clamp(10, az, 10)  => false
+ * ---------------------------------------------------------------
+ * @param $value : value to clamp
+ * @param $min   : minimum value
+ * @param $max   : maximum value
+ * ---------------------------------------------------------------
+ * @raise [Error] if one param is not a number
+ * ---------------------------------------------------------------
+ * @return [Number] | false
  */
 @function clamp($value, $min, $max) {
+  @if type-of($value) != number
+   or type-of($min)   != number
+   or type-of($max)   != number {
+     @warn "All parameters must be numbers for `clamp`.";
+     @return false;
+   }
+   
   @return if($value > $max, $max, if($value < $min, $min, $value));
 }
