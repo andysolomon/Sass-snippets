@@ -4,14 +4,17 @@
  * --------------------------------------------------------------- */
 
 /**
- * Test is $year is leap
- * ---------------------------------------------------------------
- * @param $year year to check
- * @return boolean
+ * Test if $year is leap
  * ---------------------------------------------------------------
  * @example is-leap(2000); -> true
  * @example is-leap(2013); -> false
  * @example is-leap(buzz); -> null
+ * ---------------------------------------------------------------
+ * @param $year year to check
+ * ---------------------------------------------------------------
+ * @raise [Error] if $year is not a number
+ * ---------------------------------------------------------------
+ * @return [Boolean] | null
  */
 @function is-leap($year) {
   @if type-of($year) != number {
