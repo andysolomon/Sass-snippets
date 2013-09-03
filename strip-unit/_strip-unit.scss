@@ -8,7 +8,7 @@
  * @example strip-unit(42em) => 42
  * @example strip-unit(buzz) => false
  * ---------------------------------------------------------------
- * $value : length to strip unit from
+ * @param $value : length to strip unit from
  * ---------------------------------------------------------------
  * @raise [Error] if $value not a number
  * ---------------------------------------------------------------
