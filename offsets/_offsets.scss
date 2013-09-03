@@ -13,9 +13,8 @@
  * $args     : list of offsets and values
  */
 @mixin _position($position, $args) {
-  $offsets: top right bottom left;
-  
-  @each $o in $offsets {
+
+  @each $o in top right bottom left {
     $i: index($args, $o);
     @if $i
     and $i + 1 <= length($args) 
