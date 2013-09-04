@@ -6,12 +6,15 @@
 /** 
  * Check whether a number is prime
  * ---------------------------------------------------------------
- * @param $n number to test
- * @return boolean
- * ---------------------------------------------------------------
  * @example is-prime(1254); -> false
  * @example is-prime(359);  -> true
  * @example is-prime(buzz); -> null
+ * ---------------------------------------------------------------
+ * @param $n number to test
+ * ---------------------------------------------------------------
+ * @raise [Error] if $n is not a number
+ * ---------------------------------------------------------------
+ * @return [Boolean] | null
  */
 @function is-prime($n) {
   @if type-of($n) != number {
