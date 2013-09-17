@@ -40,7 +40,10 @@
  *
  * loop($list, $value: 1)
  * Shift indexes from $list of $value
- * 
+ *
+ * is-symmetrical($list)
+ * Test if list is symmetrical
+ *
  * ------------------------------------------------------------------------------- *
  * CodePen: http://codepen.io/HugoGiraudel/pen/loAgq
  * Repository: https://github.com/HugoGiraudel/Sass-snippets/blob/master/src/list-functions/
@@ -475,4 +478,23 @@
   }
   
   @return $result;
+}
+
+/**
+ * Test if $list is symmetrical
+ * -------------------------------------------------------------------------------
+ * @example is-symmetrical( (a, b, c, d, e) ) => false
+ * @example is-symmetrical( (a, b, c, b, a) ) => true
+ * @example is-symmetrical( a )               => true
+ * -------------------------------------------------------------------------------
+ * @param $list [List] : list
+ * -------------------------------------------------------------------------------
+ * @return [Boolean]
+ */
+@function is-symmetrical($list) {
+  @if length($list) == 1 { 
+    @return true; 
+  }
+  
+  @return $list == reverse($list); 
 }
