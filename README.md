@@ -14,4 +14,4 @@ A couple of Sass tricks, mixins and functions.
 * scrollbars
 * strip-units
 
-The list functions module has been moved to Team-Sass: [https://github.com/Team-Sass/Sass-list-functions](https://github.com/Team-Sass/Sass-list-functions).
+The list functions module has been moved to Team-Sass: [https://github.com/Team-Sass/SassyLists](https://github.com/Team-Sass/SassyLists).
